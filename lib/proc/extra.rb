@@ -15,4 +15,12 @@ class Proc
 
 		obj.method(:_).to_proc
 	end
+
+	def | (second)
+		first = self
+
+		proc {|*args|
+			first.call(*args) || second.call(*args)
+		}
+	end
 end
