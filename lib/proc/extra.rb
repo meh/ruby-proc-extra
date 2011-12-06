@@ -23,4 +23,12 @@ class Proc
 			first.call(*args) || second.call(*args)
 		}
 	end
+
+	def & (second)
+		first = self
+
+		proc {|*args|
+			first.call(*args) && second.call(*args)
+		}
+	end
 end
