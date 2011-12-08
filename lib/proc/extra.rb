@@ -20,7 +20,7 @@ class Proc
 		first = self
 
 		proc {|*args|
-			first.call(*args) || second.call(*args)
+			instance_exec(*args, &first) || instance_exec(*args, &second)
 		}
 	end
 
@@ -28,7 +28,7 @@ class Proc
 		first = self
 
 		proc {|*args|
-			first.call(*args) && second.call(*args)
+			instance_exec(*args, &first) && instance_exec(*args, &second)
 		}
 	end
 end
