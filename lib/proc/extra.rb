@@ -16,6 +16,14 @@ class Proc
 		obj.method(:_).to_proc
 	end
 
+	def << (*args)
+		first = self
+
+		proc {|*args2|
+			instance_exec(*args, *args2, &first)
+		}
+	end
+
 	def | (second)
 		first = self
 
@@ -29,6 +37,14 @@ class Proc
 
 		proc {|*args|
 			instance_exec(*args, &first) && instance_exec(*args, &second)
+		}
+	end
+
+	def + (second)
+		first = self
+
+		proc {|*args|
+			instance_exec(instance_exec(*args, &second), &first)
 		}
 	end
 end
